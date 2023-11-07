@@ -4,13 +4,14 @@ from settings import VALID_EMAIL, VALID_PASSWORD
 
 
 class API:
+    """ API библиотека к сайту http://34.141.58.52:8080/#/"""
     def __init__(self):
         self.base_url = 'http://34.141.58.52:8000/'
         self.token = None
         self.user_id = None
 
     def get_token(self):
-        # Получает токен пользователя, либо возвращает его, если уже получен
+        """ Получает токен пользователя, либо возвращает его, если уже получен"""
         if self.token:
             return self.token
 
@@ -28,7 +29,7 @@ class API:
             raise Exception(f"Ошибка при запросе токена: {e}")
 
     def create_user(self, user_data):
-        # Создает нового пользователя с заданными данными
+        """ Создает нового пользователя с заданными данными"""
         try:
             res = requests.post(self.base_url + 'register', data=json.dumps(user_data))
             res.raise_for_status()
@@ -40,7 +41,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def get_list_users(self):
-        # Получает список пользователей
+        """ Получает список пользователей"""
         try:
             token = self.get_token()[1]
             headers = {'Authorization': f'Bearer {token}'}
@@ -53,7 +54,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def delete_user(self, token, user_id):
-        # Удаляет пользователя с заданным токеном и идентификатором
+        """ Удаляет пользователя с заданным токеном и идентификатором"""
         try:
             headers = {'Authorization': f'Bearer {token}'}
             res = requests.delete(self.base_url + f'users/{user_id}', headers=headers)
@@ -64,7 +65,7 @@ class API:
             raise Exception(f"Ошибка при выполнении запроса: {e}")
 
     def create_pet(self, user_id):
-        # Создает нового питомца для заданного пользователя
+        """ Создает нового питомца для заданного пользователя"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -84,7 +85,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def send_photo(self, pet_id):
-        # Отправляет фотографию для питомца с заданным идентификатором
+        """ Отправляет фотографию для питомца с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -99,7 +100,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def get_pet(self, pet_id):
-        # Получает информацию о питомце с заданным идентификатором
+        """ Получает информацию о питомце с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -111,7 +112,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def pet_list(self):
-        # Получает список питомцев
+        """ Получает список питомцев"""
         try:
             status, token, owner_id = self.get_token()  # Получаем статус, токен и идентификатор пользователя
             headers = {'Authorization': f'Bearer {token}'}
@@ -133,7 +134,7 @@ class API:
             return None
 
     def delete_pet(self, pet_id):
-        # Удаляет питомца с заданным идентификатором
+        """ Удаляет питомца с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -145,7 +146,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def pet_update(self, pet_id, update_data):
-        # Обновляет информацию о питомце с заданным идентификатором
+        """ Обновляет информацию о питомце с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -156,7 +157,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def add_like(self, pet_id):
-        # Добавляет лайк для питомца с заданным идентификатором
+        """ Добавляет лайк для питомца с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
@@ -173,7 +174,7 @@ class API:
             raise Exception(f"Ошибка при запросе: {e}")
 
     def add_comment(self, pet_id, comment_text):
-        # Добавляет комментарий для питомца с заданным идентификатором
+        """ Добавляет комментарий для питомца с заданным идентификатором"""
         try:
             token = self.get_token()
             headers = {'Authorization': f'Bearer {token}'}
